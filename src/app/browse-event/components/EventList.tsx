@@ -33,7 +33,7 @@ const EventList = ({ take = 3, showSearch = true }: Props) => {
     queryFn: async () => {
       const params: Record<string, any> = {
         page,
-        take, // ✅ 3 event per page
+        take,
         search: debouncedValue,
       };
 
@@ -64,10 +64,10 @@ const EventList = ({ take = 3, showSearch = true }: Props) => {
             <Input
               onChange={(e) => {
                 setSearch(e.target.value);
-                setPage(1); // ✅ reset page kalau search berubah
+                setPage(1);
               }}
               placeholder="Search for event..."
-              className="h-12 w-full rounded-full border border-slate-200 bg-white px-5 pr-12 text-sm text-slate-900 shadow-sm outline-none focus:ring-2 focus:ring-blue-600/25"
+              className="h-12 w-full rounded-full border border-blue-200 bg-white px-5 pr-12 text-sm text-slate-900 shadow-sm outline-none focus:ring-2 focus:ring-blue-600/25"
               value={search}
             />
 

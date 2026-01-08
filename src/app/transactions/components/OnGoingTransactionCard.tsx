@@ -21,7 +21,7 @@ const OnGoingTransactionCard = ({ trx, onClick }: OnGoingTransactionCardProps) =
       onClick={() => onClick?.(trx)}
       className="group block w-full text-left"
     >
-      <div className="w-full rounded-[48px] border border-slate-300 bg-white p-6 transition hover:shadow-2xl">
+      <div className="w-full rounded-[24px] border border-blue-200 bg-white p-6 transition hover:shadow-2xl">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           {/* Left */}
           <div className="flex items-center gap-6">

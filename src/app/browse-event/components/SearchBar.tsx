@@ -30,7 +30,7 @@ export default function SearchBar({
         <Input
           onChange={(e) => onChange?.(e.target.value)}
           placeholder={placeholder}
-          className="w-full h-12 rounded-full bg-white border border-slate-200 px-5 pr-12 text-sm text-slate-900 shadow-sm outline-none focus:ring-2 focus:ring-blue-600/25"
+          className="w-full h-12 rounded-full bg-white border border-blue px-5 pr-12 text-sm text-slate-900 shadow-sm outline-none focus:ring-2 focus:ring-blue-600/25"
         />
 
         <button

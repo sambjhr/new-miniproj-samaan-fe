@@ -3,19 +3,17 @@
 import axiosInstance from "@/lib/axios";
 import { PageableResponse } from "@/types/pagination";
 import { useQuery } from "@tanstack/react-query";
-import { parseAsInteger, useQueryState } from "nuqs";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useMemo, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { X } from "lucide-react";
 
-import OnGoingTransactionCard, {
-  OnGoingTransaction,
-} from "./OnGoingTransactionCard";
-
+import OnGoingTransactionCard, { OnGoingTransaction } from "./OnGoingTransactionCard";
 import PaginationSection from "@/components/ui/PaginationSection";
 
 type Props = {
   onSelect: (trx: OnGoingTransaction) => void;
-  take?: number; // default 5
+  take?: number;
 };
 
 type ApiTransactionRow = {
@@ -66,12 +64,10 @@ export default function OnGoingTransactionList({ onSelect, take = 3 }: Props) {
   }, [session]);
 
   const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
-  const [status] = useQueryState("status", { defaultValue: "" }); // to-pay, to-confirm, my-booking, to-rate
+  const [status, setStatus] = useQueryState("status", parseAsString.withDefault(""));
 
-  // ✅ kalau status berubah, reset page biar UX enak
   useEffect(() => {
     setPage(1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const { data, isPending, isError } = useQuery({
@@ -79,7 +75,7 @@ export default function OnGoingTransactionList({ onSelect, take = 3 }: Props) {
     enabled: !!token,
     queryFn: async () => {
       const res = await axiosInstance.get<PageableResponse<ApiTransactionRow>>(
-        "/transactions/me",
+        "/transactions/me", // atau "/transactions" sesuai route kamu
         {
           params: {
             page,
@@ -91,7 +87,6 @@ export default function OnGoingTransactionList({ onSelect, take = 3 }: Props) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
       return res.data;
     },
   });
@@ -99,7 +94,7 @@ export default function OnGoingTransactionList({ onSelect, take = 3 }: Props) {
   const mapped: OnGoingTransaction[] =
     data?.data?.map((r) => ({
       id: r.transaction_id,
-      eventId: r.transaction_id, // kalau kamu butuh event_id, boleh tambahkan di backend select
+      eventId: r.transaction_id,
       eventName: r.events?.title ?? "-",
       eventDate: r.events?.start_date
         ? new Date(r.events.start_date).toLocaleDateString("id-ID")
@@ -112,10 +107,32 @@ export default function OnGoingTransactionList({ onSelect, take = 3 }: Props) {
       image: r.events?.image ?? "/thumbnail.jpeg",
     })) ?? [];
 
-  const onClickPagination = (nextPage: number) => setPage(nextPage);
-
   return (
     <>
+      {/*  Active filter bar */}
+      {status ? (
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm">
+            <p className="text-sm text-slate-700">
+              Filter status:{" "}
+              <span className="font-semibold text-slate-900">{status}</span>
+            </p>
+
+            <button
+              type="button"
+              onClick={() => {
+                setStatus("");
+                setPage(1);
+              }}
+              className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-700 hover:bg-slate-200"
+            >
+              <X className="h-4 w-4" />
+              Clear
+            </button>
+          </div>
+        </div>
+      ) : null}
+
       <div className="container mx-auto flex flex-col gap-8 p-4">
         {isPending ? (
           <div className="my-10 text-center">
@@ -134,19 +151,21 @@ export default function OnGoingTransactionList({ onSelect, take = 3 }: Props) {
             <p className="text-lg font-semibold text-slate-900">
               Tidak ada transaksi.
             </p>
-            <p className="mt-2 text-slate-600">
-              Coba pilih status lain.
-            </p>
+            <p className="mt-2 text-slate-600">Coba pilih status lain.</p>
           </div>
         ) : null}
 
         {mapped.map((trx) => (
-          <OnGoingTransactionCard key={String(trx.id)} trx={trx} onClick={onSelect} />
+          <OnGoingTransactionCard
+            key={String(trx.id)}
+            trx={trx}
+            onClick={onSelect}
+          />
         ))}
       </div>
 
       {data?.meta ? (
-        <PaginationSection meta={data.meta} onClick={onClickPagination} />
+        <PaginationSection meta={data.meta} onClick={(next) => setPage(next)} />
       ) : null}
     </>
   );
