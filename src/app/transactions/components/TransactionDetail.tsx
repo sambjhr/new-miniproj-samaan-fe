@@ -216,16 +216,6 @@ export default function TransactionDetail({
           <p className="text-2xl">{displayTrx.total}</p>
         </div>
 
-        {/* status */}
-        <div className="mt-8 text-center text-slate-900">
-          <p className="text-xl">Status: {displayTrx.status}</p>
-          <p className="mt-4 text-xl">
-            Dateline Pembayaran:
-            <br />
-            {displayTrx.dateline ? displayTrx.dateline : "(jika belum bayar)"}
-          </p>
-        </div>
-
         {/* STEP 1: Create transaction only */}
         {isDraft ? (
           <div className="mt-8">
@@ -265,7 +255,7 @@ export default function TransactionDetail({
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 rounded-full bg-white/90 px-3 py-1 text-sm text-slate-700 shadow"
+          className="absolute right-4 top-4 rounded-full bg-red-500 px-3 py-1 text-sm text-white/90 shadow"
         >
           Close
         </button>

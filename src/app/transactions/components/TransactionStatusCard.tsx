@@ -14,7 +14,7 @@ interface TransactionStatusCardProps {
 const TransactionStatusCard = ({ status }: TransactionStatusCardProps) => {
   return (
     <Link href={status.href} className="group block">
-      <div className="flex h-full flex-col items-center gap-4 rounded-xl p-4 transition hover:shadow-2xl">
+      <div className="flex h-full flex-col items-center gap-4 rounded-xl p-4 transition hover:shadow-2xl border border-blue-500">
         {/* Icon */}
         <div className="h-30 w-30 overflow-hidden rounded-full bg-white flex items-center justify-center">
           <img
