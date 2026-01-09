@@ -97,9 +97,9 @@ const PromotionCard = ({ promo }: PromotionCardProps) => {
               e.stopPropagation(); // biar tidak double click handler
               doCopy();
             }}
-            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-blue-500 transition hover:bg-white"
+            className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-blue-500 transition hover:bg-blue-500 hover:text-white"
           >
-            copy our discount here
+            click to copy coupon
           </button>
         </div>
       </div>

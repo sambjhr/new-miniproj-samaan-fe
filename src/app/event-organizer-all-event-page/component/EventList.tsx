@@ -15,7 +15,7 @@ import EventCard from "@/app/browse-event/components/EventCard";
 type Props = {
   take?: number; // default 3
   showSearch?: boolean; // default true
-  organizer_id?: number; // ✅ filter by organizer
+  organizer_id?: number; // filter by organizer
 };
 
 const EventList = ({ take = 3, showSearch = true, organizer_id }: Props) => {
@@ -31,7 +31,6 @@ const EventList = ({ take = 3, showSearch = true, organizer_id }: Props) => {
   const [debouncedValue] = useDebounceValue(search, 500);
 
   const { data: events, isPending } = useQuery({
-    // ✅ organizer_id masuk queryKey biar cache aman
     queryKey: ["events", page, debouncedValue, category, take, organizer_id],
     queryFn: async () => {
       const params: Record<string, any> = {

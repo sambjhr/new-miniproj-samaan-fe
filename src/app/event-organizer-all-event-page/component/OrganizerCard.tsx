@@ -15,7 +15,7 @@ export const OrganizerCard = ({ organizer_id }: Props) => {
     queryKey: ["organizer-card", organizer_id],
     enabled: Number.isFinite(organizer_id) && organizer_id > 0,
     queryFn: async () => {
-      // ambil 1 event aja buat “numpang” data organizer
+      // ambil 1 event buat “numpang” data organizer
       const res = await axiosInstance.get<PageableResponse<Event>>("/events", {
         params: { page: 1, take: 1, organizer_id },
       });
