@@ -133,7 +133,7 @@ const WritePage = () => {
   }
 
   return (
-    <div className="container mx-auto max-w-7xl p-4">
+    <div className="container mx-auto max-w-5xl p-4">
       <form id="form-write" onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
           {/* Title */}

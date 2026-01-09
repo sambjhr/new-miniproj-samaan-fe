@@ -106,7 +106,7 @@ export default function WritePromoPage() {
   }
 
   return (
-    <div className="container mx-auto max-w-3xl p-4">
+    <div className="container mx-auto max-w-5xl p-4">
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup>
           <Controller

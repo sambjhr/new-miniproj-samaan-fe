@@ -8,21 +8,45 @@ import React from "react";
 import { OnGoingTransaction } from "./components/OnGoingTransactionCard";
 import OnGoingTransactionList from "./components/OnGoingTransactionList";
 import TransactionDetail from "./components/TransactionDetail";
-import TransactionStatusCard, { TransactionStatus } from "./components/TransactionStatusCard";
+import TransactionStatusCard, {
+  TransactionStatus,
+} from "./components/TransactionStatusCard";
 import { TransactionDetailData } from "./types";
 import ReviewEventForm from "../review/component/ReviewEventForm";
-// import ReviewEventForm from "./components/ReviewEventForm";
+import UploadBuktiBayarCard from "./components/UploadBuktiBayarCard";
+import { useQueryClient } from "@tanstack/react-query";
 
 const statuses: TransactionStatus[] = [
-  { id: 1, name: "To pay", icon: "/gambar/transaction/to-pay.png", value: "to-pay" },
-  { id: 2, name: "To Confirm", icon: "/gambar/transaction/admin-confirmation.png", value: "to-confirm" },
-  { id: 3, name: "My Booking", icon: "/gambar/transaction/my-booking.png", value: "my-booking" },
-  { id: 4, name: "To Rate", icon: "/gambar/transaction/to-rate.png", value: "to-rate" },
+  {
+    id: 1,
+    name: "To pay",
+    icon: "/gambar/transaction/to-pay.png",
+    value: "to-pay",
+  },
+  {
+    id: 2,
+    name: "To Confirm",
+    icon: "/gambar/transaction/admin-confirmation.png",
+    value: "to-confirm",
+  },
+  {
+    id: 3,
+    name: "My Booking",
+    icon: "/gambar/transaction/my-booking.png",
+    value: "my-booking",
+  },
+  {
+    id: 4,
+    name: "To Rate",
+    icon: "/gambar/transaction/to-rate.png",
+    value: "to-rate",
+  },
 ];
 
 function MyTransactions() {
   const [openDetail, setOpenDetail] = React.useState(false);
-  const [selectedTrx, setSelectedTrx] = React.useState<TransactionDetailData | null>(null);
+  const [selectedTrx, setSelectedTrx] =
+    React.useState<TransactionDetailData | null>(null);
 
   const [openReview, setOpenReview] = React.useState(false);
   const [reviewTarget, setReviewTarget] = React.useState<{
@@ -31,6 +55,11 @@ function MyTransactions() {
     eventTitle: string;
     organizerName?: string;
   } | null>(null);
+
+  const qc = useQueryClient();
+
+  const [openPayProof, setOpenPayProof] = React.useState(false);
+  const [payTrxId, setPayTrxId] = React.useState<string | null>(null);
 
   const handleSelectTrx = (trx: OnGoingTransaction) => {
     const status = (trx.status ?? "").toLowerCase();
@@ -47,22 +76,11 @@ function MyTransactions() {
     }
 
     // To Pay -> buka modal upload proof
-    if (status !== "to pay") return;
-
-    setSelectedTrx({
-      id: trx.id,
-      eventName: trx.eventName,
-      eventDate: trx.eventDate,
-      status: trx.status,
-      dateline: trx.dateline,
-      image: trx.image || "/thumbnail.jpeg",
-      tickets: [
-        { name: "Tiket vip", price: "Rp100.000,00" },
-        { name: "Tiket reguler", price: "Rp100.000,00" },
-        { name: "Tiket Konser", price: "Rp100.000,00" },
-      ],
-      total: "Rp300.000,00",
-    });
+    if (status === "to pay") {
+      setPayTrxId(String(trx.id));
+      setOpenPayProof(true);
+      return;
+    }
 
     setOpenDetail(true);
   };
@@ -74,7 +92,9 @@ function MyTransactions() {
       <div className="container mx-auto space-y-8 pt-10">
         {/* Transaction */}
         <div>
-          <h1 className="mx-auto mb-5 p-5 text-4xl font-bold">My Transaction</h1>
+          <h1 className="mx-auto mb-5 p-5 text-4xl font-bold">
+            My Transaction
+          </h1>
           <div className="container mx-auto grid grid-cols-2 items-stretch gap-8 md:grid-cols-4">
             {statuses.map((s) => (
               <TransactionStatusCard key={s.id} status={s} />
@@ -84,12 +104,16 @@ function MyTransactions() {
 
         {/* On Going Transaction */}
         <div>
-          <h1 className="mx-auto mb-5 p-5 text-4xl font-bold">On Going Transaction</h1>
+          <h1 className="mx-auto mb-5 p-5 text-4xl font-bold">
+            On Going Transaction
+          </h1>
           <OnGoingTransactionList onSelect={handleSelectTrx} />
         </div>
 
         <div>
-          <h1 className="mx-auto mb-5 p-8 text-4xl font-bold">Mungkin kamu juga tertarik:</h1>
+          <h1 className="mx-auto mb-5 p-8 text-4xl font-bold">
+            Mungkin kamu juga tertarik:
+          </h1>
         </div>
         <EventList />
 
@@ -102,6 +126,39 @@ function MyTransactions() {
       </div>
 
       <Contactus />
+
+      {openPayProof && payTrxId ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="w-full max-w-xl">
+            <div className="mb-3 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setOpenPayProof(false);
+                  setPayTrxId(null);
+                }}
+                className="rounded-full bg-white px-4 py-2 text-sm font-medium shadow"
+              >
+                Close
+              </button>
+            </div>
+
+            <UploadBuktiBayarCard
+              trxId={payTrxId}
+              onSuccess={async () => {
+                // refresh list biar status berubah (WAITING_FOR_CONFIRMATION)
+                await qc.invalidateQueries({ queryKey: ["my-transactions"] });
+                setOpenPayProof(false);
+                setPayTrxId(null);
+              }}
+              onViewOtherEvent={() => {
+                setOpenPayProof(false);
+                setPayTrxId(null);
+              }}
+            />
+          </div>
+        </div>
+      ) : null}
 
       {openReview && reviewTarget ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">

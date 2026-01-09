@@ -16,9 +16,19 @@ export type Event = {
   location: string;
   image: string;
   category_id: number;
+  organizer_id: number;
 
   organizers: {
     organization_name: string;
+    average_rating?: string | number | null; // Decimal -> string biasanya
+    total_reviews?: number | null;
+    user?: {
+      profile_image: string | null;
+    } | null;
+
+    _count?: {
+      events: number;
+    };
   };
 
   categories?: {

@@ -18,6 +18,7 @@ type Props = {
 
 type ApiTransactionRow = {
   transaction_id: string;
+  event_id: string;
   status: string;
   payment_deadline: string | null;
   confirmation_deadline: string | null;
@@ -94,7 +95,7 @@ export default function OnGoingTransactionList({ onSelect, take = 3 }: Props) {
   const mapped: OnGoingTransaction[] =
     data?.data?.map((r) => ({
       id: r.transaction_id,
-      eventId: r.transaction_id,
+      eventId: r.event_id,
       eventName: r.events?.title ?? "-",
       eventDate: r.events?.start_date
         ? new Date(r.events.start_date).toLocaleDateString("id-ID")
