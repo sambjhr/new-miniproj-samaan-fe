@@ -8,7 +8,7 @@ export default function Jumbotron() {
 
       {/* Konten */}
       <div className="relative z-10 mx-auto max-w-4xl items-center px-6 text-center text-white">
-        <img src="/gambar/logo/samaanwhite.png" alt="logo samaan" className="max-w-md" />
+        <img src="/gambar/logo/SAMAANwhite.png" alt="logo samaan" className="max-w-md" />
         <h2 className="mt-1 text-base text-white opacity-100 md:text-lg">
           Find events. Book tickets. Show up together
         </h2>

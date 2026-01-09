@@ -1,8 +1,9 @@
 import Contactus from "@/components/Contactus";
 import Navbar from "@/components/Navbar";
-import PromotionList from "@/components/ui/PromotionList";
+// import PromotionList from "@/components/ui/PromotionList";
 import { OrganizerCard } from "../component/OrganizerCard";
 import EventList from "../component/EventList";
+import PromotionList from "../component/PromotionList";
 
 export default function OrganizerAllEventPage({
   searchParams,

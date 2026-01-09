@@ -2,8 +2,8 @@ import Navbar from "@/components/Navbar";
 import Contactus from "@/components/Contactus";
 import Jumbotron from "@/components/ui/Jumbotron";
 import EventList from "@/app/browse-event/components/EventList";
-import PromotionList from "@/components/ui/PromotionList";
 import CategoryList from "@/app/browse-event/components/CategroyList";
+import PromotionList from "../browse-event/components/PromotionList";
 
 function Home() {
   return (

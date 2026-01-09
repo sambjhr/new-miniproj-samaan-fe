@@ -3,7 +3,6 @@
 import EventList from "@/app/browse-event/components/EventList";
 import Contactus from "@/components/Contactus";
 import Navbar from "@/components/Navbar";
-import PromotionList from "@/components/ui/PromotionList";
 import React from "react";
 import { OnGoingTransaction } from "./components/OnGoingTransactionCard";
 import OnGoingTransactionList from "./components/OnGoingTransactionList";
@@ -15,6 +14,7 @@ import { TransactionDetailData } from "./types";
 import ReviewEventForm from "../review/component/ReviewEventForm";
 import UploadBuktiBayarCard from "./components/UploadBuktiBayarCard";
 import { useQueryClient } from "@tanstack/react-query";
+import PromotionList from "../browse-event/components/PromotionList";
 
 const statuses: TransactionStatus[] = [
   {

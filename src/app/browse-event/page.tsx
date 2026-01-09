@@ -2,8 +2,8 @@
 import Contactus from "@/components/Contactus";
 import Navbar from "@/components/Navbar";
 import EventList from "@/app/browse-event/components/EventList";
-import PromotionList from "@/components/ui/PromotionList";
 import CategoryList from "./components/CategroyList";
+import PromotionList from "./components/PromotionList";
 
 function BrowseEvent() {
   return (
