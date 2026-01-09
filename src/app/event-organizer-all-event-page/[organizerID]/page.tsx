@@ -1,16 +1,15 @@
-import Contactus from "@/components/Contactus";
 import Navbar from "@/components/Navbar";
-// import PromotionList from "@/components/ui/PromotionList";
-import { OrganizerCard } from "../component/OrganizerCard";
 import EventList from "../component/EventList";
 import PromotionList from "../component/PromotionList";
+import { OrganizerCard } from "../component/OrganizerCard";
+import Footer from "@/components/Contactus";
 
 export default function OrganizerAllEventPage({
-  searchParams,
+  params,
 }: {
-  searchParams: { organizer_id?: string };
+  params: { organizerID: string };
 }) {
-  const organizerId = Number(searchParams.organizer_id ?? 0);
+  const organizerId = Number(params.organizerID);
 
   return (
     <div>
@@ -31,11 +30,12 @@ export default function OrganizerAllEventPage({
           <h1 className="container mx-auto mb-5 p-10 text-center text-4xl font-bold">
             Our Promotions
           </h1>
-          <PromotionList />
+
+          <PromotionList organizerId={organizerId} />
         </div>
       </div>
 
-      <Contactus />
+      <Footer />
     </div>
   );
 }
