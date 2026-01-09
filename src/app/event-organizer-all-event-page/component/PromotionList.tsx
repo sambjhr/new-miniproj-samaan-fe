@@ -16,7 +16,7 @@ type Props = {
 
 const PromotionList = ({ organizerId }: Props) => {
   const { data, isPending } = useQuery({
-    queryKey: ["promotions", organizerId], // ✅ biar gak bentrok antar page
+    queryKey: ["promotions", organizerId],
     enabled: Boolean(organizerId),
     queryFn: async () => {
       const res = await axiosInstance.get<ApiResponse>(

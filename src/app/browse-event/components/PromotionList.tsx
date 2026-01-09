@@ -23,7 +23,7 @@ const PromotionList = () => {
     queryKey: ["promotions"],
     enabled: Boolean(token),
     queryFn: async () => {
-      const res = await axiosInstance.get<ApiResponse>("/promotions", {
+      const res = await axiosInstance.get<ApiResponse>("/promotions/public", {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data.data;

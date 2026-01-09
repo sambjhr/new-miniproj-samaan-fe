@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { toast } from "sonner";
 
 export type Promotion = {
@@ -66,7 +65,7 @@ const PromotionCard = ({ promo }: PromotionCardProps) => {
       <div className="absolute inset-0 bg-black/55" />
 
       {/* Content */}
-      <div className="relative z-10 flex h-full flex-col justify-between  text-center p-5 text-white">
+      <div className="relative z-10 flex h-full flex-col justify-between p-5 text-center text-white">
         <div className="space-y-2">
           <p className="text-xs">
             Coupon Code For: <br />
@@ -76,7 +75,7 @@ const PromotionCard = ({ promo }: PromotionCardProps) => {
           <div className="text-xs">
             <p>
               Event Time: <br />
-              <span className="font-semibold text-xl">
+              <span className="text-xl font-semibold">
                 {startEvent} {" - "} {endEvent}
               </span>
             </p>
@@ -85,7 +84,7 @@ const PromotionCard = ({ promo }: PromotionCardProps) => {
 
         <div className="flex items-end justify-between">
           <div>
-            <p className="text-xs opacity-80 text-left">Coupon code</p>
+            <p className="text-left text-xs opacity-80">Coupon code</p>
             <p className="text-2xl font-extrabold tracking-wider">
               {promo.code}
             </p>
@@ -94,7 +93,7 @@ const PromotionCard = ({ promo }: PromotionCardProps) => {
           <button
             type="button"
             onClick={(e) => {
-              e.stopPropagation(); // biar tidak double click handler
+              e.stopPropagation();
               doCopy();
             }}
             className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-blue-500 transition hover:bg-blue-500 hover:text-white"
