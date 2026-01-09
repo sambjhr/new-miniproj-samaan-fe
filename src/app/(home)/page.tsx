@@ -21,14 +21,12 @@ function Home() {
       </div>
 
       {/* Featured Event */}
-      <div>
-        <h1 className="container mx-auto mb-5 p-10 text-center text-4xl font-bold justify-center">
+      <section>
+        <h1 className="container mx-auto mb-5 p-10 text-center text-4xl font-bold">
           Featured Events
         </h1>
-      </div>
-
+      </section>
       <EventList />
-
       {/* Promotions */}
       <div>
         <h1 className="container mx-auto mb-5 p-10 text-center text-4xl font-bold">

@@ -10,7 +10,7 @@ interface EventCardProps {
 const EventCard = ({ event }: EventCardProps) => {
   return (
     <Link href={`/event/${event.slug}`}>
-      <div className="flex h-full flex-col gap-2 rounded-xl border border-blue-200 p-3 transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg">
+      <div className="flex h-full flex-col gap-2 rounded-xl border-white shadow-blue-200 shadow-2xl p-3 transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg">
         <div className="relative h-40 w-full overflow-hidden rounded-lg">
           <Image
             src={event.image}

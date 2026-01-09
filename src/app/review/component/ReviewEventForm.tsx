@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { z } from "zod";
@@ -59,6 +59,15 @@ export default function ReviewEventForm({
     },
     mode: "onChange",
   });
+
+  useEffect(() => {
+    form.reset({
+      transaction_id: transactionId,
+      event_id: eventId,
+      rating: 5,
+      comment: "",
+    });
+  }, [transactionId, eventId, form]);
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (payload: Form) => {
